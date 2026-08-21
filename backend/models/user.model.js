@@ -1,0 +1,28 @@
+const mongoose = require("mongoose");
+const userSchemma = new mongoose.Schema({
+    fullname:{
+        type:String,
+        required:true
+    },
+    email:{
+        type:String,
+        required:true,
+        unique:true
+    },
+    password:{
+        type:String
+    },
+    mobile:{
+        type:String,
+        required:true
+    },
+    role:{
+        type:String,
+        enum:["user","owner","deliveryBoy"],
+        required:true
+    }
+},{ timestamps:true});
+
+
+const User = mongoose.model("User",userSchemma);
+export default User; 
