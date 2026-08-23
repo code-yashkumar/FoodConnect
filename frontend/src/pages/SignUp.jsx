@@ -159,7 +159,7 @@ const SignUp = () => {
                     event.currentTarget.style.backgroundColor = primaryColor;
                 }}
             >
-                SignUp
+                Sign Up
             </button>
 
             <button className="w-full mt-4 flex items-center justify-center gap-2 rounded-lg px-4 py-3 font-medium text-gray-600 shadow-sm transition duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2"
@@ -186,7 +186,5 @@ const SignUp = () => {
   )
 }
 
-                    
- 
 
 export default SignUp
