@@ -10,9 +10,9 @@ const ForgotPassword = () => {
 
     const [step, setstep] = useState(1);
     const [email, setEmail] = useState("");
-    const [otp, setOtp] = useState("");  
+    const [otp, setOtp] = useState("");
     const [password, setPassword] = useState("");
-    const [confirmPassword, setConfirmPassword] = useState(""); 
+    const [confirmPassword, setConfirmPassword] = useState("");
     const navigate = useNavigate();
 
     return (
@@ -24,7 +24,6 @@ const ForgotPassword = () => {
                         Forgot Password
                     </h1>
                 </div>
-
 
                 {/* step 1 enter email */}
                 {step === 1 && (
@@ -67,18 +66,18 @@ const ForgotPassword = () => {
                 {step === 2 && (
                     <div>
                         <div className="mb-4 mt-4">
-                            <label htmlFor="email" className="block text-gray-700 font-semibold mb-2">
-                                Email
+                            <label htmlFor="otp" className="block text-gray-700 font-semibold mb-2">
+                                OTP
                             </label>
                             <input
-                                type="email"
-                                id="email"
-                                name="email"
+                                type="otp"
+                                id="otp"
+                                name="otp"
                                 placeholder="Enter OTP"
                                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[${primaryColor}]`}
                                 style={{ border: `1px solid ${borderColor}` }}
-                                onChange={(e) => setEmail(e.target.value)}
-                                value={email}
+                                onChange={(e) => setOtp(e.target.value)}
+                                value={otp}
                             />
                         </div>
                         <button
@@ -103,7 +102,6 @@ const ForgotPassword = () => {
                 {step === 3 && (
                     //input new password and confirm password and a button to submit
                     <div>
-
                         {/* new password */}
                         <div className="mb-4 mt-4">
                             <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
@@ -117,7 +115,7 @@ const ForgotPassword = () => {
                                 className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[${primaryColor}]`}
                                 style={{ border: `1px solid ${borderColor}` }}
                                 onChange={(e) => setPassword(e.target.value)}
-                                value={email}
+                                value={password}
                             />
                         </div>
 
@@ -157,8 +155,6 @@ const ForgotPassword = () => {
                         </button>
                     </div>
                 )}
-
-                
             </div>
         </div>
     );
