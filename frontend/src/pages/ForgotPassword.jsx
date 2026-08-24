@@ -1,6 +1,9 @@
 import { useState } from "react";
+import { FaRegEye, FaRegEyeSlash } from "react-icons/fa";
 import { IoArrowBack } from "react-icons/io5";
 import { useNavigate } from "react-router-dom";
+import axios from "axios";
+import { serverUrl } from "../App.jsx";
 
 const ForgotPassword = () => {
     const primaryColor = "#4CAF50"; // Example primary color
@@ -13,7 +16,45 @@ const ForgotPassword = () => {
     const [otp, setOtp] = useState("");
     const [password, setPassword] = useState("");
     const [confirmPassword, setConfirmPassword] = useState("");
+    const [showPassword, setShowPassword] = useState(false);
+    const [showConfirmPassword, setShowConfirmPassword] = useState(false);
     const navigate = useNavigate();
+
+    const handleSendOtp = async () => {
+        try {
+            const result = await axios.post(`${serverUrl}/api/auth/send-otp`, { email }, { withCredentials: true });
+            console.log(result);
+            setstep(2);
+        } catch (error) {
+            console.error("Error during OTP send:", error);
+        }
+    };
+
+    const handleVerifyOtp = async () => {
+        try {
+            const result = await axios.post(`${serverUrl}/api/auth/verify-otp`, { email, otp }, { withCredentials: true });
+            console.log(result);
+            setstep(3);
+        } catch (error) {
+            console.error("Error during OTP verification:", error);
+        }
+    };
+
+    const handleResetPassword = async () => {
+        if (password !== confirmPassword) {
+            alert("Passwords do not match");
+            return;
+        }
+        try {
+            const result = await axios.post(`${serverUrl}/api/auth/reset-password`, { email, newPassword: password }, { withCredentials: true });
+            console.log(result);
+
+            alert("Password reset successfully");
+            navigate("/signin");
+        } catch (error) {
+            console.error("Error during password reset:", error);
+        }
+    };
 
     return (
         <div className="flex w-full items-center justify-center min-h-screen p-4" style={{ backgroundColor: bgColor }}>
@@ -56,7 +97,8 @@ const ForgotPassword = () => {
                             }}
                             onMouseLeave={(event) => {
                                 event.currentTarget.style.backgroundColor = primaryColor;
-                            }}>
+                            }}
+                            onClick={handleSendOtp}>
                             Send OTP
                         </button>
                     </div>
@@ -93,7 +135,8 @@ const ForgotPassword = () => {
                             }}
                             onMouseLeave={(event) => {
                                 event.currentTarget.style.backgroundColor = primaryColor;
-                            }}>
+                            }}
+                            onClick={handleVerifyOtp}>
                             Verify
                         </button>
                     </div>
@@ -107,16 +150,25 @@ const ForgotPassword = () => {
                             <label htmlFor="password" className="block text-gray-700 font-semibold mb-2">
                                 New Password
                             </label>
-                            <input
-                                type="password"
-                                id="password"
-                                name="password"
-                                placeholder="Enter your new password"
-                                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[${primaryColor}]`}
-                                style={{ border: `1px solid ${borderColor}` }}
-                                onChange={(e) => setPassword(e.target.value)}
-                                value={password}
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showPassword ? "text" : "password"}
+                                    id="password"
+                                    name="password"
+                                    placeholder="Enter your new password"
+                                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[${primaryColor}]`}
+                                    style={{ border: `1px solid ${borderColor}` }}
+                                    onChange={(e) => setPassword(e.target.value)}
+                                    value={password}
+                                />
+                                <button
+                                    type="button"
+                                    aria-label={showPassword ? "Hide new password" : "Show new password"}
+                                    className="absolute right-3 top-[13px] cursor-pointer text-gray-500"
+                                    onClick={() => setShowPassword((prev) => !prev)}>
+                                    {showPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                                </button>
+                            </div>
                         </div>
 
                         {/* confirm password */}
@@ -124,16 +176,25 @@ const ForgotPassword = () => {
                             <label htmlFor="confirm-password" className="block text-gray-700 font-semibold mb-2">
                                 Confirm New Password
                             </label>
-                            <input
-                                type="password"
-                                id="confirm-password"
-                                name="confirmPassword"
-                                placeholder="Re-enter your new password"
-                                className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[${primaryColor}]`}
-                                style={{ border: `1px solid ${borderColor}` }}
-                                onChange={(e) => setConfirmPassword(e.target.value)}
-                                value={confirmPassword}
-                            />
+                            <div className="relative">
+                                <input
+                                    type={showConfirmPassword ? "text" : "password"}
+                                    id="confirm-password"
+                                    name="confirmPassword"
+                                    placeholder="Re-enter your new password"
+                                    className={`w-full px-4 py-2 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[${primaryColor}]`}
+                                    style={{ border: `1px solid ${borderColor}` }}
+                                    onChange={(e) => setConfirmPassword(e.target.value)}
+                                    value={confirmPassword}
+                                />
+                                <button
+                                    type="button"
+                                    aria-label={showConfirmPassword ? "Hide confirmed password" : "Show confirmed password"}
+                                    className="absolute right-3 top-[13px] cursor-pointer text-gray-500"
+                                    onClick={() => setShowConfirmPassword((prev) => !prev)}>
+                                    {showConfirmPassword ? <FaRegEye /> : <FaRegEyeSlash />}
+                                </button>
+                            </div>
                         </div>
 
                         {/* submit button */}
@@ -150,7 +211,8 @@ const ForgotPassword = () => {
                             }}
                             onMouseLeave={(event) => {
                                 event.currentTarget.style.backgroundColor = primaryColor;
-                            }}>
+                            }}
+                            onClick={handleResetPassword}>
                             Reset Password
                         </button>
                     </div>

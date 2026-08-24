@@ -162,7 +162,9 @@ const SignUp = () => {
                     }}
                     onMouseLeave={(event) => {
                         event.currentTarget.style.backgroundColor = primaryColor;
-                    }}>
+                    }}
+                    // onClick={handleSignUp}
+                    >
                     Sign Up
                 </button>
 
