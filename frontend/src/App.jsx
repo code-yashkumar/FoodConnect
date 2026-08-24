@@ -1,16 +1,17 @@
-import { Route, Routes } from "react-router-dom"
-import SignUp from "./pages/SignUp.jsx"
-import SignIn from "./pages/SignIn.jsx"
-export const serverUrl="http://localhost:8000"
+import { Route, Routes } from "react-router-dom";
+import SignUp from "./pages/SignUp.jsx";
+import SignIn from "./pages/SignIn.jsx";
+import ForgotPassword from "./pages/ForgotPassword.jsx";
+export const serverUrl = "http://localhost:8000";
 
 const App = () => {
-  return (
-    <Routes>
-      <Route path="/signup" element={<SignUp />} />
-      <Route path="/signin" element={<SignIn />} />
-    </Routes>
-    
-  )
-} 
+    return (
+        <Routes>
+            <Route path="/signup" element={<SignUp />} />
+            <Route path="/signin" element={<SignIn />} />
+            <Route path="/signin/forgot-password" element={<ForgotPassword />} />
+        </Routes>
+    );
+};
 
-export default App
+export default App;

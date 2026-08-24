@@ -1,4 +1,3 @@
-
 import jwt from 'jsonwebtoken';
  
 const genToken = async (userId) => {
@@ -9,6 +8,5 @@ const genToken = async (userId) => {
         console.error("Error generating token:", err);
     }
 } 
-
 
 export default genToken;
